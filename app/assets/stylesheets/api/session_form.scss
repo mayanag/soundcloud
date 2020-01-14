@@ -1,0 +1,33 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-form label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-form input {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  // border-radius: 5%;
+  height: 20px;
+}
+
+.login-form .submit {
+  background-color: #FCE5F7
+}
+
+button {
+  background-color: #FCE5F7;
+}
+

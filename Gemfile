@@ -31,7 +31,7 @@ gem 'activestorage'
 gem 'rails_12factor'
 gem 'jquery-rails'
 
-gem "aws-sdk-s3", require: false
+gem "aws-sdk-s3"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
