@@ -12,7 +12,7 @@ class Api::TracksController < ApplicationController
     @track = Track.new(track_params)
     if !@track.image.attached?
         file = open('app/assets/images/anime-study-girl.jpg')
-        @track.image.attach(io: file, filename: 'anime-girl.jpg')
+        @track.image.attach(io: file, filename: 'anime-girl.jpg') #yoo
     end
     if @track.save
         render 'api/tracks/show'
