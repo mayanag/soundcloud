@@ -94,9 +94,34 @@ class SessionForm extends React.Component {
       .then(this.props.closeModal)
   }
 
+  // handleDemo(e) {
+  //   const demoUser = {
+  //     username: 'demo_user', email: '', password: 'demo123'
+  //   };
+  //   this.state = demoUser;
+  //   const intervalLength = 75;
+  //   const timer = demoUser.username.length * intervalLength;
+  //   this.totalTimer = timer + (demoUser.password.length * intervalLength) + 1000;
+  //   this.typeInputInfo("username", demoUser.username, intervalLength);
+  //   setTimeout(() => this.typeInputInfo("password", demoUser.password, intervalLength), timer)
+  // }
+  // typeInputInfo(field, value, intervalLength) {
+  //   let incrementedValue = "";
+  //   setInterval(() => {
+  //     if (value.length > 0) {
+  //       incrementedValue += value.slice(0, 1);
+  //       value = value.slice(1);
+  //       this.setState({ [field]: incrementedValue });
+  //     } else {
+  //       clearInterval();
+  //     }
+  //   }, intervalLength);
+  // }    
+  // }
+
   handleDemo(e) {
     e.preventDefault();
-    const demoUser = { username: 'demo', email: '', password: 'hello123' };
+    const demoUser = { username: 'demo_user', email: '', password: 'demo123' };
     this.props.processForm(demoUser)
     .then(this.props.closeModal)
   }

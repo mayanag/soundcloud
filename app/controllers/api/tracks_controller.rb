@@ -1,6 +1,10 @@
 class Api::TracksController < ApplicationController
   def index
-
+    if params[:splash]
+      @tracks = Track.all.limit(3)
+    else
+      @tracks = Track.all
+    end
   end
 
   def show
@@ -10,10 +14,12 @@ class Api::TracksController < ApplicationController
 
   def create
     @track = Track.new(track_params)
+    @track.artist_id = current_user.id
     if !@track.image.attached?
         file = open('app/assets/images/anime-study-girl.jpg')
-        @track.image.attach(io: file, filename: 'anime-girl.jpg') #yoo
+        @track.image.attach(io: file, filename: 'anime-study-girl.jpg') #yoo
     end
+  
     if @track.save
         render 'api/tracks/show'
     else 
@@ -24,12 +30,12 @@ class Api::TracksController < ApplicationController
   def destroy
     @track = Track.find(params[:id])
     @track.destroy
-    render "api/tracks/show"
+    render json: {}
   end
 
   private
   def track_params
-    params.require(:track).permit(:title, :genre, :artist_id, )
+    params.require(:track).permit(:title, :genre, :artist_id)
   end
 
 

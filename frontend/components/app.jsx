@@ -11,23 +11,22 @@ import {
   Link,
   HashRouter
 } from 'react-router-dom';
-
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
-
 const App = () => (
-  <div>
-    <header>
+  <div className="app">
+    <header className="head">
       {/* <h1>SOWNDCLOWD</h1> */}
       <Modal/>
       <GreetingContainer/>
     </header>
     <Switch>
       <AuthRoute exact path="/" component={Splash}></AuthRoute>
-    </Switch>
-    
+    </Switch> 
     {/* <Route path="/signup" component={SignUpFormContainer}></Route> */}
     {/* <Route exact path="/" component={Splash}></Route> */}
+    {/* <Route exact path = "/account" component={Account}><</Route>
+    <Link to="/account">My Acount</Link>  */}
     <footer>i'm the footer</footer>
   </div>
 );

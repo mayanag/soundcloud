@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
 import * as SessionActions from './actions/session_actions';
+import { fetchSplashTracks } from './actions/track_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
   let store;
@@ -30,9 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // window.signup = SessionActions.signup;
   // window.login = SessionActions.login;
   // window.logout = SessionActions.logout;
+  // window.store = store;
 
+  
   window.getState = store.getState;
-  // window.dispatch = store.dispatch;
+  window.fetchSplashTracks = fetchSplashTracks;
+  window.dispatch = store.dispatch;
 
 
   const root = document.getElementById("root")

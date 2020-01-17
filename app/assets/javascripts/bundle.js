@@ -86,6 +86,29 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/current_track_actions.js":
+/*!***************************************************!*\
+  !*** ./frontend/actions/current_track_actions.js ***!
+  \***************************************************/
+/*! exports provided: RECEIVE_CURRENT_TRACK, receiveCurrentTrack */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CURRENT_TRACK", function() { return RECEIVE_CURRENT_TRACK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCurrentTrack", function() { return receiveCurrentTrack; });
+/* harmony import */ var _util_tracks_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/tracks_api_util */ "./frontend/util/tracks_api_util.js");
+
+var RECEIVE_CURRENT_TRACK = "RECEIVE_CURRENT_TRACK";
+var receiveCurrentTrack = function receiveCurrentTrack(currentTrack) {
+  return {
+    type: RECEIVE_CURRENT_TRACK,
+    currentTrack: currentTrack
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/modal_actions.js":
 /*!*******************************************!*\
   !*** ./frontend/actions/modal_actions.js ***!
@@ -187,6 +210,80 @@ var logout = function logout() {
 
 /***/ }),
 
+/***/ "./frontend/actions/track_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/track_actions.js ***!
+  \*******************************************/
+/*! exports provided: RECEIVE_TRACK, RECEIVE_TRACKS, RECEIVE_ERRORS, receiveTracks, receiveTrack, receiveErrors, fetchSplashTracks, fetchAllTracks, createTrack */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRACK", function() { return RECEIVE_TRACK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRACKS", function() { return RECEIVE_TRACKS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ERRORS", function() { return RECEIVE_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTracks", function() { return receiveTracks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTrack", function() { return receiveTrack; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSplashTracks", function() { return fetchSplashTracks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllTracks", function() { return fetchAllTracks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTrack", function() { return createTrack; });
+/* harmony import */ var _util_tracks_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/tracks_api_util */ "./frontend/util/tracks_api_util.js");
+
+var RECEIVE_TRACK = 'RECEIVE_TRACK';
+var RECEIVE_TRACKS = 'RECEIVE_TRACKS';
+var RECEIVE_ERRORS = 'RECEIVE_ERRORS'; // Regular actions
+
+var receiveTracks = function receiveTracks(tracks) {
+  return {
+    type: RECEIVE_TRACKS,
+    tracks: tracks
+  };
+};
+var receiveTrack = function receiveTrack(track) {
+  return {
+    type: RECEIVE_TRACK,
+    track: track
+  };
+};
+var receiveErrors = function receiveErrors(errors) {
+  return {
+    type: RECEIVE_ERRORS,
+    errors: errors
+  };
+}; // Thunk Actions
+
+var fetchSplashTracks = function fetchSplashTracks(tracks) {
+  return function (dispatch) {
+    return _util_tracks_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSplashTracks"](tracks).then(function (tracks) {
+      // debugger;
+      dispatch(receiveTracks(tracks));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
+    });
+  };
+};
+var fetchAllTracks = function fetchAllTracks(tracks) {
+  return function (dispatch) {
+    return _util_tracks_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchAllTracks"](tracks).then(function (tracks) {
+      return dispatch(receiveTracks(tracks));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
+    });
+  };
+};
+var createTrack = function createTrack(track) {
+  return function (dispatch) {
+    return _util_tracks_api_util__WEBPACK_IMPORTED_MODULE_0__["createTrack"](track).then(function (track) {
+      return dispatch(receiveTrack(track));
+    }, function (err) {
+      return dispatch(receiveErrors(err));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/components/app.jsx":
 /*!*************************************!*\
   !*** ./frontend/components/app.jsx ***!
@@ -215,7 +312,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "app"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+    className: "head"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
     exact: true,
     path: "/",
     component: _splash_splash__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -334,6 +435,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../session_form/login_form_container */ "./frontend/components/session_form/login_form_container.js");
 /* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.js");
+/* harmony import */ var _upload_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../upload_form_container */ "./frontend/components/upload_form_container.jsx");
+
 
 
 
@@ -358,6 +461,9 @@ function Modal(_ref) {
     case 'signup':
       component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
       break;
+
+    case 'upload':
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_upload_form_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 
     default:
       return null;
@@ -599,15 +705,39 @@ function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.processForm(user).then(this.props.closeModal);
-    }
+    } // handleDemo(e) {
+    //   const demoUser = {
+    //     username: 'demo_user', email: '', password: 'demo123'
+    //   };
+    //   this.state = demoUser;
+    //   const intervalLength = 75;
+    //   const timer = demoUser.username.length * intervalLength;
+    //   this.totalTimer = timer + (demoUser.password.length * intervalLength) + 1000;
+    //   this.typeInputInfo("username", demoUser.username, intervalLength);
+    //   setTimeout(() => this.typeInputInfo("password", demoUser.password, intervalLength), timer)
+    // }
+    // typeInputInfo(field, value, intervalLength) {
+    //   let incrementedValue = "";
+    //   setInterval(() => {
+    //     if (value.length > 0) {
+    //       incrementedValue += value.slice(0, 1);
+    //       value = value.slice(1);
+    //       this.setState({ [field]: incrementedValue });
+    //     } else {
+    //       clearInterval();
+    //     }
+    //   }, intervalLength);
+    // }    
+    // }
+
   }, {
     key: "handleDemo",
     value: function handleDemo(e) {
       e.preventDefault();
       var demoUser = {
-        username: 'demo',
+        username: 'demo_user',
         email: '',
-        password: 'hello123'
+        password: 'demo123'
       };
       this.props.processForm(demoUser).then(this.props.closeModal);
     } // handleDemov2(e) {
@@ -745,13 +875,341 @@ var mDTP = function mDTP(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_track_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/track_actions */ "./frontend/actions/track_actions.js");
+/* harmony import */ var _actions_current_track_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/current_track_actions */ "./frontend/actions/current_track_actions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
-var Splash = function Splash() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "\uD83D\uDCA6 SPLASH \uD83D\uDCA6");
+
+
+
+
+
+var Splash =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Splash, _Component);
+
+  function Splash(props) {
+    var _this;
+
+    _classCallCheck(this, Splash);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Splash).call(this, props));
+    _this.state = {
+      tracks: _this.props.tracks,
+      hover: null
+    };
+    return _this;
+  }
+
+  _createClass(Splash, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchSplashTracks();
+    }
+  }, {
+    key: "onHover",
+    value: function onHover(e) {
+      // debugger;
+      var that = this; // debugger;
+
+      this.setState({
+        hover: e.currentTarget.id
+      }); // debugger;
+
+      var audioBars = document.getElementsByClassName("splash-audio");
+
+      for (var i = 0; i < audioBars.length; i++) {
+        // debugger;
+        if (audioBars[i].id === that.state.hover) {
+          // debugger;
+          audioBars[i].style.removeProperty("display");
+        } else {
+          audioBars[i].style.display = "none";
+        }
+      }
+    } // offHover() {
+    //   this.setState({hover: ""});
+    // }
+
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var tracks = this.props.tracks.map(function (track) {
+        var playbutton = function playbutton() {
+          if (_this2.state.hover == _this2.props.currentTrack.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "pause");
+          } else {
+            return "";
+          }
+        };
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "track-box",
+          key: track.id,
+          onHover: true
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: track.imageUrl,
+          id: track.id,
+          onClick: function onClick() {
+            return _this2.props.receiveCurrentTrack(track);
+          } //this 'track' is the track from .map
+          ,
+          onMouseEnter: _this2.onHover.bind(_this2) // onMouseLeave={this.offHover.bind(this)}
+
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+          className: "splash-audio",
+          id: track.id,
+          controls: true
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+          src: track.audioUrl
+        }), "play mah shit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+          className: "title"
+        }, track.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+          className: "artist"
+        }, track.artist.username));
+      }); // const { id } = this.props.currentTrackInfo;
+      // const { play } = this.props
+      // const tracks = this.state.audioInfo.map((trackInfo, idx) => {
+      //   let hoverPlay;
+      //   let hoverCircle
+      //   if (id === trackInfo.id && play) {
+      //     hoverPlay = "fas fa-pause-circle fa-4x"
+      //   }
+      //   else if (!this.state.hover) {
+      //     hoverPlay = ""
+      //   }
+      //   else if (this.state.hover && this.state.value === idx || !play && this.state.value === idx) {
+      //     hoverPlay = "fas fa-play-circle fa-4x"
+      //   }
+      //   hoverCircle = (this.state.hover && this.state.value === idx) || (id === trackInfo.id && play) ? "fas fa-circle fa-4x" : "";
+      //   return (
+      //     <li className="cover-container" key={`info-${idx}`}>
+      //       <img id={idx} src={trackInfo.imageUrl} className="cover"
+      //         onMouseOver={this.onHover.bind(this)}
+      //         onMouseOut={this.offHover.bind(this)} />
+      //       <i className={hoverCircle}></i>
+      //       <i className={hoverPlay} id={idx} onClick={this.handlePlay.bind(this)}
+      //         onMouseOver={this.onHover.bind(this)}
+      //         onMouseOut={this.offHover.bind(this)}></i>
+      //       <p className="top-title">{trackInfo.title}</p>
+      //       <p className="top-artist">{trackInfo.artist}</p>
+      //     </li>
+      //   )
+      // })
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "splash"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "banner"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "search coming soon"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "track-box-container"
+      }, tracks));
+    }
+  }]);
+
+  return Splash;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mSTP = function mSTP(state) {
+  return {
+    tracks: Object.values(state.entities.tracks),
+    currentTrack: state.entities.currentTrack
+  };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Splash);
+var mDTP = function mDTP(dispatch) {
+  return {
+    fetchSplashTracks: function fetchSplashTracks() {
+      return dispatch(Object(_actions_track_actions__WEBPACK_IMPORTED_MODULE_2__["fetchSplashTracks"])());
+    },
+    receiveCurrentTrack: function receiveCurrentTrack(track) {
+      return dispatch(Object(_actions_current_track_actions__WEBPACK_IMPORTED_MODULE_3__["receiveCurrentTrack"])(track));
+    } //receiveCurrentTrack
+
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mSTP, mDTP)(Splash));
+{
+  /* <div style={{"backgroundColor": "white", height: "20vh"}}>
+           <div className="banner" style={{
+             width: "100%",
+             height: "50px",
+             backgroundColor: "whitesmoke",
+             textAlign: "center"
+           }}>
+           </div>
+           <div className="searchAndDiscovery" style={{
+             width: "100%",
+             height: "150px",
+             backgroundColor: "whitesmoke"
+           }}> 
+             <input type="text" id="searchbox" placeholder="Search something"/>
+             <button>Search for Songs </button>
+             { this.state.isLoggedIn ? 
+               <button onClick={() => {
+                 console.log("handler");
+                 openModal('upload');
+               }}> Or Upload Song </button> 
+               : null
+             }
+           </div> */
+}
+{
+  /* <div className="browseItems" style={{
+             width: "100%",
+             minHeight: "150px",
+             backgroundColor: "whitesmoke"
+           }}>
+            </div>
+         </div> */
+}
+
+/***/ }),
+
+/***/ "./frontend/components/upload_form_container.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/upload_form_container.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+ // import { openModal, closeModal } from '../../actions/modal_actions';
+
+var UploadFormContainer =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(UploadFormContainer, _Component);
+
+  function UploadFormContainer(props) {
+    var _this;
+
+    _classCallCheck(this, UploadFormContainer);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UploadFormContainer).call(this, props));
+    console.log("upload form");
+    return _this;
+  }
+
+  _createClass(UploadFormContainer, [{
+    key: "handleImageSelect",
+    value: function handleImageSelect() {}
+  }, {
+    key: "handleAudioSelect",
+    value: function handleAudioSelect() {}
+  }, {
+    key: "submit",
+    value: function submit() {/// call the api 
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Image "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.submit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.handleImageSelect,
+        type: "file",
+        id: "avatar",
+        name: "avatar",
+        accept: "image/png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Mp3 "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        id: "avatar",
+        name: "avatar",
+        accept: ""
+      })));
+    }
+  }]);
+
+  return UploadFormContainer;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+/*
+  1) get the modal to pop up 
+  2) 
+
+*/
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UploadFormContainer); //export default connect(mSTP, mDTP)(UploadFormContainer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/current_track_reducer.js":
+/*!****************************************************!*\
+  !*** ./frontend/reducers/current_track_reducer.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_current_track_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/current_track_actions */ "./frontend/actions/current_track_actions.js");
+
+
+var currentTrackReducer = function currentTrackReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_current_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_TRACK"]:
+      return action.currentTrack;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (currentTrackReducer);
 
 /***/ }),
 
@@ -766,10 +1224,16 @@ var Splash = function Splash() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
+/* harmony import */ var _tracks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tracks_reducer */ "./frontend/reducers/tracks_reducer.js");
+/* harmony import */ var _current_track_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./current_track_reducer */ "./frontend/reducers/current_track_reducer.js");
+
+
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  tracks: _tracks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  currentTrack: _current_track_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -932,6 +1396,53 @@ var sessionReducer = function sessionReducer() {
 
 /***/ }),
 
+/***/ "./frontend/reducers/tracks_reducer.js":
+/*!*********************************************!*\
+  !*** ./frontend/reducers/tracks_reducer.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/track_actions */ "./frontend/actions/track_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var tracksReducer = function tracksReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState;
+
+  switch (action.type) {
+    case _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRACKS"]:
+      nextState = Object.assign({}, state, action.tracks);
+      return nextState;
+
+    case _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRACK"]:
+      nextState = Object.assign({}, state, _defineProperty({}, action.track.id, action.track));
+      return nextState;
+    // case REMOVE_TRACK:
+    //   let newState = merge({}, state);
+    //   delete newState[action.trackId];
+    //   return newState;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["LOGOUT_CURRENT_USER"]:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (tracksReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/ui_reducer.js":
 /*!*****************************************!*\
   !*** ./frontend/reducers/ui_reducer.js ***!
@@ -1000,7 +1511,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_track_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/track_actions */ "./frontend/actions/track_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1031,10 +1544,12 @@ document.addEventListener('DOMContentLoaded', function () {
   } // window.signup = SessionActions.signup;
   // window.login = SessionActions.login;
   // window.logout = SessionActions.logout;
+  // window.store = store;
 
 
-  window.getState = store.getState; // window.dispatch = store.dispatch;
-
+  window.getState = store.getState;
+  window.fetchSplashTracks = _actions_track_actions__WEBPACK_IMPORTED_MODULE_5__["fetchSplashTracks"];
+  window.dispatch = store.dispatch;
   var root = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -1157,7 +1672,6 @@ var signup = function signup(user) {
   });
 };
 var login = function login(user) {
-  console.log(user);
   return $.ajax({
     url: '/api/session',
     method: 'POST',
@@ -1170,6 +1684,45 @@ var logout = function logout() {
   return $.ajax({
     url: 'api/session',
     method: 'DELETE'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/tracks_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/tracks_api_util.js ***!
+  \******************************************/
+/*! exports provided: fetchAllTracks, fetchSplashTracks, createTrack */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllTracks", function() { return fetchAllTracks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSplashTracks", function() { return fetchSplashTracks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTrack", function() { return createTrack; });
+// AJAX calls
+var fetchAllTracks = function fetchAllTracks() {
+  return $.ajax({
+    url: '/api/tracks',
+    method: 'GET' // data: { user }
+
+  });
+};
+var fetchSplashTracks = function fetchSplashTracks() {
+  return $.ajax({
+    url: '/api/tracks?splash=true',
+    method: 'GET' // data: { tracks }
+
+  });
+};
+var createTrack = function createTrack(track) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/tracks",
+    data: track,
+    contentType: false,
+    processData: false
   });
 };
 
