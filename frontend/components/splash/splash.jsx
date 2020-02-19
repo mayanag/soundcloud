@@ -69,7 +69,7 @@ class Splash extends Component {
           />
           {/* {playbutton.bind(track)()} */}
           <audio className="splash-audio" id={track.id} controls>
-            <source src={track.audioUrl}/>play mah shit
+            <source src={track.audioUrl}/>
           </audio>
           <h4 className="title">{track.title}</h4>
           <h4 className="artist">{track.artist.username}</h4>

@@ -52,7 +52,7 @@ ActiveRecord::Base.transaction do
     genre: "r&b"
   )
 
-
+ debugger
   viscous_audio = open("https://sowndclowd-aa-dev.s3-us-west-1.amazonaws.com/Viscous+ft.+Maya+Unagi+(prod.+jdawa).m4a")
   viscous_image = open("https://sowndclowd-aa-dev.s3-us-west-1.amazonaws.com/s6uNzFdTbkCDcXfgetgE7eDd")
 

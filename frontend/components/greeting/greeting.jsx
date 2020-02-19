@@ -24,7 +24,7 @@ const Greeting = ({currentUser, logout, openModal }) => {
 
   return (
     <nav className="greeting">
-      <h1>VAPOR.WAV</h1>
+      <h1>MoodyTunes</h1>
       {currentUser ? personalGreeting() : sessionLinks()}
     </nav>
   )

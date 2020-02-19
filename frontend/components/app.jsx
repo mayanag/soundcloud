@@ -4,6 +4,7 @@ import SignUpFormContainer from '../components/session_form/signup_form_containe
 import LogInFormContainer from '../components/session_form/login_form_container';
 import Modal from './modal/modal';
 import Splash from './splash/splash';
+import Footer from './footer'
 import {
   Route,
   Redirect,
@@ -27,7 +28,7 @@ const App = () => (
     {/* <Route exact path="/" component={Splash}></Route> */}
     {/* <Route exact path = "/account" component={Account}><</Route>
     <Link to="/account">My Acount</Link>  */}
-    <footer>i'm the footer</footer>
+    <Footer></Footer>
   </div>
 );
 
